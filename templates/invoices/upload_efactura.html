@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    InvoiceCloud - Subir Factura
+{% endblock %}
+
+{% block section %}
+    <div class="container">
+        {% if e_factura %}
+            Factura subida correctamente.
+        {% else %}
+            {% if errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if form.is_multipart %}
+                <form enctype="multipart/form-data" method="post">
+            {% else %}
+                <form method="post">
+            {% endif %}
+        <table>
+            {% csrf_token %}
+
+            {{ form }}
+        </table>
+        <br>
+        <button class="btn btn-default">Subir</button>
+        </form>
+
+        {% endif %}
+
+
+    </div>
+{% endblock %}

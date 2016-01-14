@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    InvoiceCloud - User
+{% endblock %}
+
+{% block section %}
+
+
+    <h1>Datos del Usuario</h1>
+    <br>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+
+            <p>{{ error }}</p>
+
+        </div>
+    {% endif %}
+
+    {% if user %}
+        <ul>
+            <li>Nombre de usuario: {{ user.username }}</li>
+            <li>Correo Electronico: {{ user.email }}</li>
+            <li>Activado: {{ user.is_active }}</li>
+        </ul>
+    {% endif %}
+
+
+
+
+{% endblock %}

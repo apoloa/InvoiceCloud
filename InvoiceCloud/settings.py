@@ -11,8 +11,8 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/database-server',
-            'NAME': 'database-name',
+            'HOST': '/cloudsql/sql',
+            'NAME': 'invoiceCloud',
             'USER': 'user',
         }
     }
@@ -20,8 +20,8 @@ else:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'ip_cloud_sql',
-        'NAME': 'database-name',
+        'HOST': 'ip',
+        'NAME': 'invoiceCloud',
         'USER': 'user',
         'PASSWORD': 'password'
         }
@@ -121,7 +121,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'InvoiceCloud',
     'invoices',
+    'users',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

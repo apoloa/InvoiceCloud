@@ -1,26 +1,43 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Invoice Cloud</title>
-    <link rel="stylesheet" href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.css">
-</head>
-<body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        Invoices Cloud
-      </a>
-        <p class="navbar-text navbar-right">
-            {% if user.is_authenticated %}
-            <a href="#">Salir</a>
-        {% else %}
-            <a href="#">Entrar</a>
+{% extends 'base.html' %}
+
+{% block title %}
+    InvoiceCloud
+{% endblock %}
+
+{% block section %}
+    {% if user.is_authenticated %}
+        <a href="/upload">Subir una nueva e-factura</a>
+        {% if facturas %}
+            <table class="table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>Idenfitificador Factura</th>
+                    <th>Cantidad</th>
+                    <th>Fecha Subida</th>
+                    <th>Descargar</th>
+                </tr>
+
+                {% for factura in facturas %}
+                    <tr>
+                        <td>{{ factura.id }}</td>
+                        {% if factura.FileHeader.Batch.BatchIdentifier %}
+                            <td>{{ factura.FileHeader.Batch.BatchIdentifier }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if factura.FileHeader.Batch.TotalInvoicesAmount.TotalAmount %}
+                            <td>{{ factura.FileHeader.Batch.TotalInvoicesAmount.TotalAmount|floatformat:2 }} {{ factura.FileHeader.Batch.InvoiceCurrencyCode }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td>{{ factura.CreateAt }}</td>
+                        <td><a href="download/{{ factura.id }}"><i class="fa fa-cloud-download"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
         {% endif %}
-        </p>
-    </div>
-  </div></nav>
-</body>
-</html>
+    {% else %}
+        Por favor <a href="/login">inicie sessión</a> para continuar o <a href="/register">registrese</a> para crear una
+        nueva cuenta
+    {% endif %}
+{% endblock %}
